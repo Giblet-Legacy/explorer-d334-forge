@@ -1,0 +1,5 @@
+# VERSION — explorer-d334-forge (Tier 1: The Cockpit)
+# Function: the current release version of this consumer. Advances only on freeze.
+# 1.0.0 — The Cockpit frozen. Tests pass (22/22).
+
+1.0.0
