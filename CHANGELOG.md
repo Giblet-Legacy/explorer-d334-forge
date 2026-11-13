@@ -11,6 +11,20 @@ Function:
 
 ### Good
 
+- (none)
+
+### Bad
+
+- (none)
+
+### Ugly
+
+- (none)
+
+## [v1.2.0] — 2026-11-13 — FROZEN
+
+### Good
+
 - Revised before freeze (SPEC_V1_2 §4, §5), from James's answers to
   LLLM NOTES Q5–Q9: `remember` and `inbox commit` write `polarity` for
   FACT / COUNTER / CONTEXT ("is not" → negate, `--polarity`
@@ -21,10 +35,11 @@ Function:
 - LLLM provenance: `dream`/`think`/`reason` read the build identity LLLM already writes (`$LLLM_HOME/models/<id>/build.json`), record its sha256 in the claim, refuse when `lllm info` warns the code or capsule changed since the build, and anchor each build in the ledger once (`type: lllm.build`) before the first claim it produced.
 - Inbox: The Legacy writes drafts (`forge.draft/1`); `forge inbox [list | commit | drop <id>]` commits them here, passphrase via getpass. Drafts are validated as untrusted input; refusals are filed with a reason.
 - `status()`: passphrase-free, read-only summary (claims by face, attested, ledger self-consistency via P6 v2, P8 mirror, open proposals, inbox, LLLM anchors) for The Legacy; `forge status` prints it.
-- Built for James's "whole projection" request (2026-11-13). Not frozen (NOTES Q7).
+- Frozen at 1.2.0 (James: "freeze", 2026-11-13).
 
 ### Bad
 
+- Frozen on the laptop run alone (2026-11-13); the S24 run is still to be confirmed.
 - Claims remembered before this revision have no `polarity`, so the
   Voice will not speak them; re-remember them (or supersede) to add it.
 - The LLLM repo pushed to GitHub has no `ask` command (its README lists one), so `forge ask` fails against it. Left to LLLM's own roadmap (REBUILD_SPEC Stage 5).
@@ -32,20 +47,6 @@ Function:
 ### Ugly
 
 - Provenance reads `lllm info` just after `lllm gen`; a build switched between the two calls would be misattributed. LLLM's runs/ journal (its ROADMAP Phase 4) would close this.
-
-## [Unreleased]
-
-### Good
-
-- (none)
-
-### Bad
-
-- (none)
-
-### Ugly
-
-- (none)
 
 ## [v1.1.0] — 2026-11-13 — FROZEN
 

@@ -16,7 +16,7 @@ Licence:  MSL-1.0
 Author:   James Gilbert (Giblets Forge)
 Status:   1.0.0 frozen (forge_cli.py, SPEC.md). v1.1 (forge_cli_v1_1.py,
           SPEC_V1_1.md) built over it on the current layers, frozen
-          at 1.1.0. Run `python forge_cli_v1_2.py <command>`: v1.2
+          at 1.1.0. v1.2 (forge_cli_v1_2.py, SPEC_V1_2.md) frozen at 1.2.0. Run `python forge_cli_v1_2.py <command>`: v1.2
           (SPEC_V1_2.md) adds LLLM provenance, `inbox` and `status`.
 
 ## What The Cockpit does

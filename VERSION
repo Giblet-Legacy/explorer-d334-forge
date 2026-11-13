@@ -4,4 +4,6 @@
 
 # 1.1.0 — forge_cli_v1_1.py frozen (SPEC_V1_1.md, current layers). Tests pass (38/38: v1 22, v1.1 16).
 
-1.1.0
+# 1.2.0 — forge_cli_v1_2.py frozen (SPEC_V1_2.md: LLLM provenance, inbox, status, polarity, lllm.db). Tests pass (46/46).
+
+1.2.0
