@@ -36,7 +36,7 @@ Function:
 
 ### Bad
 
-- Frozen on the laptop run alone (2026-11-13); the S24 run is still to be confirmed.
+- Frozen on the laptop run alone (2026-11-13); confirmed on the S24 by James, 2026-11-13.
 - A CRLF ledger written by Cockpit v1.0 on Windows is refused with a pointer to ledger-layer NOTES D1; v1.1 does not convert it. No such ledger exists on the laptop today.
 - Claims written by v1.0 with an empty subject or object, or with no single face, make the gate refuse every UNKNOWN write (fail closed by design).
 
