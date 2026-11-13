@@ -71,6 +71,10 @@ Canonical harvest:
   laptop (38/38 with v1). Not yet run on the S24. Raised 2026-11-13.
   Owner: James.
 
+- **Q7. Freeze v1.2.0?** forge_cli_v1_2.py (LLLM provenance, inbox,
+  status) built and green on the laptop (44/44). Not yet run on the S24
+  or against a real LLLM. Raised 2026-11-13. Owner: James.
+
 ## Known issues carried forward (from old CHANGELOG)
 
 - Casing glitch in generated paths — not applicable to The Cockpit

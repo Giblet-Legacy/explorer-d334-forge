@@ -11,6 +11,24 @@ Function:
 
 ### Good
 
+- `SPEC_V1_2.md`, `test_forge_v1_2.py` (6 tests, run red first) and `forge_cli_v1_2.py`. 44/44 pass (v1.0 22, v1.1 16, v1.2 6).
+- LLLM provenance: `dream`/`think`/`reason` read the build identity LLLM already writes (`$LLLM_HOME/models/<id>/build.json`), record its sha256 in the claim, refuse when `lllm info` warns the code or capsule changed since the build, and anchor each build in the ledger once (`type: lllm.build`) before the first claim it produced.
+- Inbox: The Legacy writes drafts (`forge.draft/1`); `forge inbox [list | commit | drop <id>]` commits them here, passphrase via getpass. Drafts are validated as untrusted input; refusals are filed with a reason.
+- `status()`: passphrase-free, read-only summary (claims by face, attested, ledger self-consistency via P6 v2, P8 mirror, open proposals, inbox, LLLM anchors) for The Legacy; `forge status` prints it.
+- Built for James's "whole projection" request (2026-11-13). Not frozen (NOTES Q7).
+
+### Bad
+
+- The LLLM repo pushed to GitHub has no `ask` command (its README lists one), so `forge ask` fails against it. Left to LLLM's own roadmap (REBUILD_SPEC Stage 5).
+
+### Ugly
+
+- Provenance reads `lllm info` just after `lllm gen`; a build switched between the two calls would be misattributed. LLLM's runs/ journal (its ROADMAP Phase 4) would close this.
+
+## [Unreleased]
+
+### Good
+
 - (none)
 
 ### Bad

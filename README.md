@@ -16,7 +16,8 @@ Licence:  MSL-1.0
 Author:   James Gilbert (Giblets Forge)
 Status:   1.0.0 frozen (forge_cli.py, SPEC.md). v1.1 (forge_cli_v1_1.py,
           SPEC_V1_1.md) built over it on the current layers, frozen
-          at 1.1.0. Run `python forge_cli_v1_1.py <command>`.
+          at 1.1.0. Run `python forge_cli_v1_2.py <command>`: v1.2
+          (SPEC_V1_2.md) adds LLLM provenance, `inbox` and `status`.
 
 ## What The Cockpit does
 
@@ -41,7 +42,7 @@ Maps every meaningful human action onto the frozen primitive layers:
 Each command maps to a frozen primitive. Verifying the Cockpit
 verifies those calls, in order:
 
-    pytest -q        # v1.0.0 (22) and v1.1 (16)
+    pytest -q        # v1.0.0 (22), v1.1 (16), v1.2 (6)
 
 Independent verification of the underlying stack remains the
 primitives' responsibility, not the Cockpit's.

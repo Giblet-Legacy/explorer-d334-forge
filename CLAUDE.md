@@ -8,7 +8,7 @@ P1–P15. It never reimplements them. If a command needs crypto, storage,
 trust, or gating, it calls the frozen primitive.
 
 ## The Immutable Rule
-Entry point from v1.1: `forge_cli_v1_1.py` (SPEC_V1_1.md). `forge_cli.py` is frozen v1.0.0 — never edit it or patch its `_layer` globally.
+Entry point from v1.2: `forge_cli_v1_2.py` (SPEC_V1_2.md: LLLM provenance, inbox, status) over frozen `forge_cli_v1_1.py` (SPEC_V1_1.md) over frozen `forge_cli.py` v1.0.0 — never edit those or patch their `_layer` globally.
 
 Never rewrite a primitive. Add a layer. If a Cockpit behaviour needs
 a primitive change, that is a new layer ABOVE the primitive, not an
