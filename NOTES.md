@@ -71,7 +71,7 @@ Canonical harvest:
   laptop (38/38 with v1). Not yet run on the S24. Raised 2026-11-13.
   Owner: James.
 
-- **Q7. Freeze v1.2.0?** **Resolved 2026-11-13 — James: "freeze".** Frozen on the laptop run; S24 run still to be confirmed. forge_cli_v1_2.py (LLLM provenance, inbox,
+- **Q7. Freeze v1.2.0?** **Resolved 2026-11-13 — James: "freeze".** Frozen on the laptop run; confirmed on the S24 by James, 2026-11-13. forge_cli_v1_2.py (LLLM provenance, inbox,
   status) built and green on the laptop (44/44). Not yet run on the S24
   or against a real LLLM. Raised 2026-11-13. Owner: James.
 

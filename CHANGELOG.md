@@ -39,7 +39,7 @@ Function:
 
 ### Bad
 
-- Frozen on the laptop run alone (2026-11-13); the S24 run is still to be confirmed.
+- Frozen on the laptop run alone (2026-11-13); confirmed on the S24 by James, 2026-11-13.
 - Claims remembered before this revision have no `polarity`, so the
   Voice will not speak them; re-remember them (or supersede) to add it.
 - The LLLM repo pushed to GitHub has no `ask` command (its README lists one), so `forge ask` fails against it. Left to LLLM's own roadmap (REBUILD_SPEC Stage 5).
