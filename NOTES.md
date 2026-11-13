@@ -54,6 +54,11 @@ Canonical harvest:
 
 ## Open questions for owner review before v1 freeze
 
+- **Freeze forge_cli_v1_3 at 1.3.0?** P13 v3 gate, commit_cube, attest
+  (SPEC_V1_3.md), and the LLLM engine via LLLM_CLI. Built and green on the laptop (53/53). Not yet run on
+  the S24. Raised 2026-11-13. Owner: James.
+  **Resolved 2026-11-13 — James: "freeze commmit and push".** Frozen on the laptop run; S24 run still to be confirmed.
+
 - **Q1. Signing key location.** Where does the operator's PEM key
   live by default? `~/.forge/key.pem`? Somewhere else? Configurable
   via env var or always flag-passed?

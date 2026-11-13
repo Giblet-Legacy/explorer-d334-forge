@@ -21,6 +21,39 @@ Function:
 
 - (none)
 
+## [v1.3.0] — 2026-11-13 — FROZEN
+
+### Good
+
+- `SPEC_V1_3.md`, `test_forge_v1_3.py` (5 tests, run red first) and
+  `forge_cli_v1_3.py`: every Keystone Gate check (remember, inbox
+  commit, cubes) goes through P13 v3, so a subject can hold many
+  claims; memory now carries polarity into the gate.
+- `commit_cube`: one cube with several faces, committed through v1.1's
+  path. `attest`: propose plus approve with a key already loaded, so a
+  batch is signed after one passphrase prompt.
+- The LLLM engine is found through `LLLM_CLI` (the engine's lllm/cli.py,
+  run with this Python) or `lllm` on PATH: the engine's README installs
+  `lllm` as a shell function, which v1.2 could never see. A refusal
+  ("(nothing: ...)", exit 0) is now an error and is never stored.
+  dream / think / reason go through this; v1.2's public API is
+  re-exported so The Legacy v7 can use v1.3.
+- 53/53 pass from the repo root and the parent. forge_cli.py, v1_1
+  and v1_2 untouched; v1.1's `_layer` map is not patched (P13 v3 is
+  loaded by name). Built on James's delegation ("fix properly"). Frozen at 1.3.0 (James: "freeze commmit and push", 2026-11-13); laptop run, S24 run
+  still to be confirmed.
+
+### Bad
+
+- Each commit and append re-verifies the whole ledger (v1.1's
+  `_check_ledger` and `_mirror`), so a large batch slows as the ledger
+  grows.
+
+### Ugly
+
+- `_cmd_remember` and the inbox commit are restated from v1.2 to swap
+  the gate; the rest of each is unchanged.
+
 ## [v1.2.0] — 2026-11-13 — FROZEN
 
 ### Good

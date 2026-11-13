@@ -6,4 +6,6 @@
 
 # 1.2.0 — forge_cli_v1_2.py frozen (SPEC_V1_2.md: LLLM provenance, inbox, status, polarity, lllm.db). Tests pass (46/46).
 
-1.2.0
+# 1.3.0 — forge_cli_v1_3.py frozen (SPEC_V1_3.md: P13 v3 gate, commit_cube, attest, LLLM engine via LLLM_CLI). 53/53. Tests pass on the laptop; S24 run to be confirmed.
+
+1.3.0
