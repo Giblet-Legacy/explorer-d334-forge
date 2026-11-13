@@ -2,4 +2,6 @@
 # Function: the current release version of this consumer. Advances only on freeze.
 # 1.0.0 — The Cockpit frozen. Tests pass (22/22).
 
-1.0.0
+# 1.1.0 — forge_cli_v1_1.py frozen (SPEC_V1_1.md, current layers). Tests pass (38/38: v1 22, v1.1 16).
+
+1.1.0

@@ -14,7 +14,9 @@ Depends:  P2, P3, P4, P6, P7, P8, P9, P12, P13, P14, P15
 LLM:      LLLM only (lllm CLI as subprocess). No other backend.
 Licence:  MSL-1.0
 Author:   James Gilbert (Giblets Forge)
-Status:   0.0.0-dev (in build, pre-freeze)
+Status:   1.0.0 frozen (forge_cli.py, SPEC.md). v1.1 (forge_cli_v1_1.py,
+          SPEC_V1_1.md) built over it on the current layers, frozen
+          at 1.1.0. Run `python forge_cli_v1_1.py <command>`.
 
 ## What The Cockpit does
 
@@ -39,7 +41,7 @@ Maps every meaningful human action onto the frozen primitive layers:
 Each command maps to a frozen primitive. Verifying the Cockpit
 verifies those calls, in order:
 
-    pytest -q test_forge.py
+    pytest -q        # v1.0.0 (22) and v1.1 (16)
 
 Independent verification of the underlying stack remains the
 primitives' responsibility, not the Cockpit's.

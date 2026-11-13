@@ -64,6 +64,12 @@ Canonical harvest:
 - **Q4. Health check depth.** 15 layer probes may take a few seconds.
   Is a `--quick` variant (skip LLM checks) wanted for CI-like use?
 - **Q5. Web UI port.** 8085 default. Configurable? Env var or flag?
+  **Resolved 2026-11-13 (SPEC_V1_1 §10), by the VS Code AI on James's
+  delegation:** the Cockpit runs no web server. 8085 belongs to SCP
+  Substrate, 8080 to The Legacy; `forge web` points at both.
+- **Q6. Freeze v1.1.0?** **Resolved 2026-11-13 — James: "freeze all".** Frozen on the laptop run; the S24 run is still to be confirmed. forge_cli_v1_1.py built and green on the
+  laptop (38/38 with v1). Not yet run on the S24. Raised 2026-11-13.
+  Owner: James.
 
 ## Known issues carried forward (from old CHANGELOG)
 
