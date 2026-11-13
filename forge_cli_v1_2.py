@@ -9,7 +9,9 @@ Function:
       is refused, and each build is anchored in the ledger once;
     - the inbox: drafts written by The Legacy are committed here, with
       the passphrase entered here;
-    - status(): a passphrase-free, read-only summary The Legacy shows.
+    - status(): a passphrase-free, read-only summary The Legacy shows;
+    - polarity for FACT / COUNTER / CONTEXT claims (the Voice needs it),
+      and LLLM output stored as OPINION in its own lllm.db.
     Every other command is v1.1's, unchanged.
 
     forge_cli.py and forge_cli_v1_1.py are frozen and not edited.
@@ -32,6 +34,11 @@ Internal helpers (numbered below):
     12. _file_away     — move a draft to done/ or refused/ with a note
     13. _cmd_inbox     — list | commit | drop <id>
     14. _cmd_status    — status() as JSON
+    15. _lllm_db_path  — FORGE_HOME/lllm.db (LLLM output, OPINION)
+    16. _polarised     — claim + polarity for asserted faces
+    17. _asserted_capsule — v1.1 capsule + polarity
+    18. _commit_lllm   — v1.1 commit, into lllm.db
+    19. _cmd_remember  — remember with polarity
 
 Tier:     Tier 1 — Consumer (The Cockpit)
 Depends:  Cockpit v1.1.0; LLLM CLI and $LLLM_HOME (read-only)
@@ -61,6 +68,68 @@ _layer = _v11._layer
 
 DRAFT_VERSION = "forge.draft/1"
 _DRAFT_KEYS = {"draft", "subject", "object", "text", "face", "created_at"}
+POLARITY_FACES = ("FACT", "COUNTER", "CONTEXT")   # SPEC_V1_2 §4: asserted faces only
+LLLM_FACE = "OPINION"                              # SPEC_V1_2 §5: LLLM output is opinion
+
+
+# ---------------------------------------------------------------------------
+# 15. _lllm_db_path
+#     SPEC_V1_2 §5: LLLM's own P9 database, beside forge.db.
+# ---------------------------------------------------------------------------
+def _lllm_db_path():
+    return os.path.join(_v1._forge_home(), "lllm.db")
+
+
+# ---------------------------------------------------------------------------
+# 16. _polarised
+#     SPEC_V1_2 §4. Returns (claim, polarity or None). A leading "not "
+#     on the object means negate and is removed; `override` wins.
+#     ValueError for an override on a face that takes no polarity.
+# ---------------------------------------------------------------------------
+def _polarised(claim, face, override=None):
+    obj = claim["object"]
+    negated = obj.lower().startswith("not ")
+    if negated:
+        obj = obj[4:].strip()
+    if face not in POLARITY_FACES:
+        if override:
+            raise ValueError(f"--polarity applies only to {', '.join(POLARITY_FACES)} claims")
+        return claim, None
+    if override not in (None, "affirm", "negate"):
+        raise ValueError("--polarity must be affirm or negate")
+    return dict(claim, object=obj), override or ("negate" if negated else "affirm")
+
+
+# ---------------------------------------------------------------------------
+# 17. _asserted_capsule
+#     v1.1's capsule (P13 cube + face + provenance) plus `polarity` for
+#     the asserted faces, the field the Voice requires (LLLM SPEC §4).
+# ---------------------------------------------------------------------------
+def _asserted_capsule(claim, face, text, override=None, **extra):
+    claim, polarity = _polarised(claim, face, override)
+    capsule = _v11._capsule(claim, face, text, **extra)
+    if polarity:
+        capsule["polarity"] = polarity
+    return capsule
+
+
+# ---------------------------------------------------------------------------
+# 18. _commit_lllm
+#     SPEC_V1_2 §5: as v1.1's _commit, into lllm.db instead of forge.db.
+#     The ledger and P8 mirror are the same single audit trail.
+# ---------------------------------------------------------------------------
+def _commit_lllm(capsule, key):
+    env, sign, sub = _layer("envelope"), _layer("sign"), _layer("substrate")
+    _v11._check_ledger(key)
+    signed = sign.sign_capsule(capsule, key)
+    claim_id = env.sha256_hex(env.canonical_bytes(signed))
+    db = _lllm_db_path()
+    sub.init_db(db)
+    if sub.read_claim(db, claim_id) is not None:
+        return claim_id, None
+    if sub.write_claim(db, capsule, key) != claim_id:
+        raise RuntimeError("P9 claim id differs from the signed capsule's hash")
+    return claim_id, _v11._append(sub.get_claim(db, claim_id), key)
 
 
 # ---------------------------------------------------------------------------
@@ -153,22 +222,18 @@ def _cmd_generated(kind, face, rest):
     if not claim["subject"] or not claim["object"]:
         print(f"{kind} parse failed: no subject and object in {source[:60]!r}", file=sys.stderr)
         return 1
-    extra = {"build_id": prov["build_id"],
+    extra = {"build_id": prov["build_id"], "source": "lllm", "generated_by": kind,
              "lllm": {"build_id": prov["build_id"], "build_json_sha256": prov["build_json_sha256"]}}
     if kind == "dream":
         extra["lllm_output_sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()
     try:
-        if face == "UNKNOWN":
-            try:
-                _layer("datacube").keystone_gate(claim, _v11._memory())
-            except ValueError as e:
-                print(f"keystone gate: {e}", file=sys.stderr)
-                return 1
-        capsule = _v11._capsule(claim, face, text[:500], **extra)
+        # SPEC_V1_2 §5: LLLM output is OPINION, in lllm.db, never in forge.db.
+        # The Keystone Gate guards UNKNOWN claims, so it does not apply here.
+        capsule = _v11._capsule(claim, LLLM_FACE, text[:500], **extra)
         key = _v11._load_key(_v1._key_path())
         _v11._check_ledger(key)
         _anchor(prov, key)
-        claim_id, entry = _v11._commit(capsule, key)
+        claim_id, entry = _commit_lllm(capsule, key)
     except KeyboardInterrupt:
         raise
     except Exception as e:
@@ -309,7 +374,7 @@ def _cmd_inbox(rest):
                     _layer("datacube").keystone_gate(claim, _v11._memory())
                 except ValueError as e:
                     raise ValueError(f"keystone gate: {e}") from None
-            capsule = _v11._capsule(claim, d["face"], d["text"])
+            capsule = _asserted_capsule(claim, d["face"], d["text"])
         except (OSError, ValueError) as e:
             _file_away(draft_id, path, "refused", {"reason": str(e)})
             refused += 1
@@ -369,8 +434,10 @@ def status():
 
     anchors = [(e.get("record") or {}).get("build_id") for e in entries
                if isinstance(e.get("record"), dict) and e["record"].get("type") == "lllm.build"]
+    lllm_db = _lllm_db_path()
+    opinions = len(_layer("substrate").list_claims(lllm_db)) if os.path.exists(lllm_db) else 0
     return {"claims": claims, "ledger": ledger, "pending_proposals": len(_v11._pending()) if entries else 0,
-            "inbox": inbox, "lllm_anchors": anchors}
+            "inbox": inbox, "lllm_anchors": anchors, "lllm_opinions": opinions}
 
 
 # ---------------------------------------------------------------------------
@@ -382,11 +449,63 @@ def _cmd_status(rest):
 
 
 # ---------------------------------------------------------------------------
+# 19. _cmd_remember
+#     v1.1's remember (SPEC_V1_1 §4–§5) with polarity (SPEC_V1_2 §4):
+#     `--polarity affirm|negate` overrides "is not" detection; it is a
+#     usage error (exit 2) on a face that takes no polarity.
+# ---------------------------------------------------------------------------
+def _cmd_remember(rest):
+    import argparse
+    p = argparse.ArgumentParser(prog="forge remember")
+    p.add_argument("text", nargs="+")
+    p.add_argument("--face", required=True)
+    p.add_argument("--polarity", default=None)
+    try:
+        args = p.parse_args(rest)
+    except SystemExit:
+        return 2
+    face = args.face.upper()
+    if face not in _v1._FACES:
+        print(f"invalid face: {face}. must be one of {_v1._FACES}", file=sys.stderr)
+        return 2
+    text = " ".join(args.text).strip()
+    claim = _v1._parse_claim(text)
+    if not claim["subject"] or not claim["object"]:
+        print(f"cannot split {text!r} into subject and object; phrase it as '<subject> is <object>'",
+              file=sys.stderr)
+        return 2
+    try:
+        capsule = _asserted_capsule(claim, face, text, args.polarity)
+    except ValueError as e:
+        print(str(e), file=sys.stderr)
+        return 2
+    try:
+        if face == "UNKNOWN":
+            try:
+                _layer("datacube").keystone_gate(claim, _v11._memory())
+            except ValueError as e:
+                print(f"keystone gate: {e}", file=sys.stderr)
+                return 1
+        key = _v11._load_key(_v1._key_path())
+        claim_id, entry = _v11._commit(capsule, key)
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        print(f"remember failed: {e}", file=sys.stderr)
+        return 1
+    if entry is None:
+        print("already remembered; nothing appended", file=sys.stderr)
+    print(claim_id)
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # 1. main
 #    v1.2 commands, else v1.1's main.
 # ---------------------------------------------------------------------------
 def main(argv):
     handlers = {
+        "remember": _cmd_remember,
         "dream": lambda rest: _cmd_generated("dream", "UNKNOWN", rest),
         "think": lambda rest: _cmd_generated("think", "OPINION", rest),
         "reason": lambda rest: _cmd_generated("reason", "CONTEXT", rest),

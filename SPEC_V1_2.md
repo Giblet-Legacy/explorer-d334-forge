@@ -101,18 +101,50 @@ single-signer, not whose key it is (that needs the passphrase:
 equals the ledger bytes, None when there is no store. `forge status`
 prints it as JSON.
 
-## 4. Tests (test_forge_v1_2.py)
+## 4. Polarity (for the Voice)
+
+LLLM, the Voice (`Giblet-Legacy/lllm`, SPEC §4), answers only from
+claims whose capsule has `polarity` `affirm` or `negate`. Decided
+2026-11-13 (LLLM NOTES Q5, Q8; James: "i sign, yo decide"):
+
+- `remember` and `inbox commit` write `polarity` for **FACT, COUNTER
+  and CONTEXT** claims only. OPINION, FICTION and UNKNOWN claims get
+  none, so the Voice never speaks them as fact.
+- An object starting "not " means `negate`, and the "not " is removed
+  ("The cat is not a dog" → subject `cat`, object `a dog`, negate).
+  Otherwise `affirm`.
+- `remember --polarity affirm|negate` overrides the detection. On a
+  face without polarity, or with any other value, it is a usage error
+  (exit 2) and nothing is written.
+- Known limitation: P13's Keystone Gate compares subject and object
+  only, not polarity.
+
+## 5. LLLM output is OPINION, in its own database
+
+James, 2026-11-13: "lllm should be stored in a different db and be
+opinions". `dream`, `think` and `reason` now write to
+`$FORGE_HOME/lllm.db` (P9 schema, through substrate_v3), always with
+face OPINION, `source: "lllm"` and `generated_by: <command>`, and
+never to `forge.db`. The Keystone Gate guards UNKNOWN claims, so it no
+longer runs for generated text. The ledger, the P8 mirror and the LLLM
+build anchor (§1.3) are unchanged: one audit trail for both
+databases. `status()` adds `lllm_opinions`.
+
+## 6. Tests (test_forge_v1_2.py)
 
 - Provenance: parses `lllm info`; warnings, missing build or missing
   build.json refuse; nothing written on refusal.
-- Dream: capsule carries the build hash; the anchor precedes the claim
-  in the ledger; a second dream on the same build adds no anchor; the
+- Dream: capsule carries the build hash, face OPINION, in lllm.db and
+  not forge.db; the anchor precedes the claim in the ledger; a second dream on the same build adds no anchor; the
   ledger still verifies under P6.
 - Inbox: drafts written by `write_draft` are committed; a contradicting
   UNKNOWN and an invalid file go to refused/ with a reason; drop works;
   the ledger grows by exactly the committed claims.
 - status(): correct counts without a passphrase; a tampered ledger is
   not self-consistent.
+- Polarity: FACT affirm, "is not" negate with "not" removed, CONTEXT
+  override, none for FICTION / UNKNOWN / OPINION, usage errors; inbox
+  drafts get the same rule.
 
 ---
 
@@ -120,3 +152,5 @@ prints it as JSON.
 
 - **SPEC 1.2.0** — 2026-11-13, by the VS Code AI for James's "whole
   projection" request.
+- Revised before freeze, 2026-11-13: §4 polarity and §5 LLLM output
+  (James's answers to LLLM NOTES Q5–Q9).

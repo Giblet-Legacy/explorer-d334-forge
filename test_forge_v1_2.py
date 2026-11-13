@@ -13,6 +13,8 @@ Functions in this file (pytest-collected):
     4. test_inbox_commit_and_refuse
     5. test_inbox_drop_and_invalid
     6. test_status
+    11. test_remember_polarity
+    12. test_inbox_polarity
 
 Fixtures and helpers:
     7.  workspace — FORGE_HOME with key.pem, LLLM_HOME with one build
@@ -125,7 +127,12 @@ def test_dream_anchors_build_once(workspace, run):
     assert anchor["build_id"] == BID and anchor["identity"] == BUILD["identity"]
     claim = recs[2]
     assert claim["lllm"] == {"build_id": BID, "build_json_sha256": anchor["build_json_sha256"]}
-    assert claim["face"] == "UNKNOWN" and claim["build_id"] == BID
+    assert claim["face"] == "OPINION" and claim["build_id"] == BID and "polarity" not in claim
+    assert claim["source"] == "lllm"
+    assert not (workspace / "forge.db").exists()  # LLLM output never enters the truth store
+    sub = cli._layer("substrate")
+    rows = sub.list_claims(str(workspace / "lllm.db"), verify=True)
+    assert [r["capsule"]["subject"] for r in rows] == ["tide", "moon"] and all(r["verified"] for r in rows)
     assert run("verify-ledger")[0] == 0
 
 
@@ -175,8 +182,43 @@ def test_status(workspace, run):
     assert s["claims"]["total"] == 2 and s["claims"]["by_face"]["UNKNOWN"] == 1
     assert s["ledger"]["entries"] == 2 and s["ledger"]["self_consistent"] is True
     assert s["ledger"]["p8_mirror"] is True and s["inbox"]["pending"] == 1
+    assert s["lllm_opinions"] == 0
     lp = workspace / "ledger.jsonl"
     lp.write_bytes(lp.read_bytes().replace(b"blue", b"bleu"))
     assert cli.status()["ledger"]["self_consistent"] is False
     rc, out, _ = run("status")
     assert rc == 0 and json.loads(out)["claims"]["total"] == 2
+
+
+# 11. test_remember_polarity
+def test_remember_polarity(workspace, run):
+    db = str(workspace / "forge.db")
+    sub = cli._layer("substrate")
+
+    def cap(text, *flags):
+        rc, out, err = run("remember", text, *flags)
+        assert rc == 0, err
+        return sub.read_claim(db, out.strip())["capsule"]
+
+    c = cap("The sky is blue", "--face", "FACT")
+    assert (c["object"], c["polarity"]) == ("blue", "affirm")
+    c = cap("The cat is not a dog", "--face", "FACT")
+    assert (c["subject"], c["object"], c["polarity"]) == ("cat", "a dog", "negate")
+    c = cap("The sea is deep", "--face", "CONTEXT", "--polarity", "negate")
+    assert c["polarity"] == "negate"
+    c = cap("The moon is cheese", "--face", "FICTION")
+    assert "polarity" not in c
+    c = cap("The tide is late", "--face", "UNKNOWN")
+    assert "polarity" not in c
+    assert run("remember", "The sun is hot", "--face", "OPINION", "--polarity", "affirm")[0] == 2
+    assert run("remember", "The sun is hot", "--face", "FACT", "--polarity", "maybe")[0] == 2
+
+
+# 12. test_inbox_polarity
+def test_inbox_polarity(workspace, run):
+    cli.write_draft({"subject": "fire", "object": "not cold", "text": "Fire is not cold", "face": "FACT"})
+    cli.write_draft({"subject": "rain", "object": "wet", "text": "Rain is wet?", "face": "OPINION"})
+    assert run("inbox", "commit")[0] == 0
+    caps = [r["capsule"] for r in cli._layer("substrate").list_claims(str(workspace / "forge.db"))]
+    assert {c["subject"]: (c["object"], c.get("polarity")) for c in caps} == {
+        "fire": ("cold", "negate"), "rain": ("wet", None)}

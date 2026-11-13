@@ -11,6 +11,12 @@ Function:
 
 ### Good
 
+- Revised before freeze (SPEC_V1_2 §4, §5), from James's answers to
+  LLLM NOTES Q5–Q9: `remember` and `inbox commit` write `polarity` for
+  FACT / COUNTER / CONTEXT ("is not" → negate, `--polarity`
+  overrides), so the Voice can answer; `dream` / `think` / `reason`
+  store LLLM output as OPINION in its own `lllm.db`, never in
+  forge.db (one ledger for both). 46/46 pass.
 - `SPEC_V1_2.md`, `test_forge_v1_2.py` (6 tests, run red first) and `forge_cli_v1_2.py`. 44/44 pass (v1.0 22, v1.1 16, v1.2 6).
 - LLLM provenance: `dream`/`think`/`reason` read the build identity LLLM already writes (`$LLLM_HOME/models/<id>/build.json`), record its sha256 in the claim, refuse when `lllm info` warns the code or capsule changed since the build, and anchor each build in the ledger once (`type: lllm.build`) before the first claim it produced.
 - Inbox: The Legacy writes drafts (`forge.draft/1`); `forge inbox [list | commit | drop <id>]` commits them here, passphrase via getpass. Drafts are validated as untrusted input; refusals are filed with a reason.
@@ -19,6 +25,8 @@ Function:
 
 ### Bad
 
+- Claims remembered before this revision have no `polarity`, so the
+  Voice will not speak them; re-remember them (or supersede) to add it.
 - The LLLM repo pushed to GitHub has no `ask` command (its README lists one), so `forge ask` fails against it. Left to LLLM's own roadmap (REBUILD_SPEC Stage 5).
 
 ### Ugly
