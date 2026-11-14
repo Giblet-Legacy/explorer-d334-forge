@@ -11,15 +11,25 @@ Function:
 
 ### Good
 
-- (none)
+- `SPEC_V1_4.md`, `test_forge_v1_4.py` (3 tests, run red first) and
+  `forge_cli_v1_4.py`: `register` and `forge entity add` / `forge subject
+  add` write P9 v4 entities and subjects and append each new signed
+  record to the ledger; `forge subjects` lists registered and
+  unregistered names; `commit_cube(..., predicate=)` writes claims such
+  as "the-legacy depends on explorer-d334-forge".
+- 56/56 pass. forge_cli.py and v1_1 to v1_3 untouched. Built on James's
+  delegation ("i am an entity … hal layer is a subject"). Not frozen
+  (NOTES).
 
 ### Bad
 
-- (none)
+- None found.
 
 ### Ugly
 
-- (none)
+- `commit_cube` with a predicate restates v1.3's body, because P13's cube
+  keeps only subject and object; the predicate is set on the capsule
+  just before signing.
 
 ## [v1.3.0] — 2026-11-13 — FROZEN
 
