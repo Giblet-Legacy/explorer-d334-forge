@@ -21,7 +21,7 @@ Status:   1.0.0 frozen (forge_cli.py, SPEC.md). v1.1 (forge_cli_v1_1.py,
           v1.3 (forge_cli_v1_3.py, SPEC_V1_3.md: P13 v3 gate, commit_cube,
           attest, LLLM engine via LLLM_CLI) frozen at 1.3.0. v1.4
           (forge_cli_v1_4.py, SPEC_V1_4.md: entity / subject add, subjects,
-          predicates) built, not frozen.
+          predicates) frozen at 1.4.0.
 
 ## What The Cockpit does
 

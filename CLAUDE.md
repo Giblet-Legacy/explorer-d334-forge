@@ -10,7 +10,7 @@ trust, or gating, it calls the frozen primitive.
 ## The Immutable Rule
 Entry point from v1.2: `forge_cli_v1_2.py` (SPEC_V1_2.md: LLLM provenance, inbox, status, polarity, lllm.db; frozen 1.2.0) over frozen `forge_cli_v1_1.py` (SPEC_V1_1.md) over frozen `forge_cli.py` v1.0.0 — never edit those or patch their `_layer` globally.
 `forge_cli_v1_3.py` (SPEC_V1_3.md: P13 v3 gate, commit_cube, attest, LLLM engine via LLLM_CLI; frozen 1.3.0) is the entry point from v1.3.
-`forge_cli_v1_4.py` (SPEC_V1_4.md: P9 v4 entities and subjects, predicates; built, not frozen) is the layer over v1.3.
+`forge_cli_v1_4.py` (SPEC_V1_4.md: P9 v4 entities and subjects, predicates; frozen 1.4.0) is the layer over v1.3.
 
 Never rewrite a primitive. Add a layer. If a Cockpit behaviour needs
 a primitive change, that is a new layer ABOVE the primitive, not an

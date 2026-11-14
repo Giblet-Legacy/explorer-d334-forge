@@ -11,6 +11,20 @@ Function:
 
 ### Good
 
+- (none)
+
+### Bad
+
+- (none)
+
+### Ugly
+
+- (none)
+
+## [v1.4.0] — 2026-11-14 — FROZEN
+
+### Good
+
 - `SPEC_V1_4.md`, `test_forge_v1_4.py` (3 tests, run red first) and
   `forge_cli_v1_4.py`: `register` and `forge entity add` / `forge subject
   add` write P9 v4 entities and subjects and append each new signed

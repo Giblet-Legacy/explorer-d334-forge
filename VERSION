@@ -8,4 +8,6 @@
 
 # 1.3.0 — forge_cli_v1_3.py frozen (SPEC_V1_3.md: P13 v3 gate, commit_cube, attest, LLLM engine via LLLM_CLI). 53/53. Tests pass on the laptop; S24 run to be confirmed.
 
-1.3.0
+# 1.4.0 — forge_cli_v1_4.py frozen (SPEC_V1_4.md: P9 v4 entities and subjects, predicates). 56/56. Tests pass on the laptop; S24 run to be confirmed (not in the Termux block James ran).
+
+1.4.0
