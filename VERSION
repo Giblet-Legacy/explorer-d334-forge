@@ -10,4 +10,8 @@
 
 # 1.4.0 — forge_cli_v1_4.py frozen (SPEC_V1_4.md: P9 v4 entities and subjects, predicates). 56/56. Tests pass on the laptop; S24 run to be confirmed (not in the Termux block James ran).
 
-1.4.0
+# 1.5.0 — forge_cli_v1_5.py frozen (SPEC_V1_5.md: forge answer). 60/60 at build. Tests pass on the laptop and the S24.
+
+# 1.6.0 — forge_cli_v1_6.py frozen (SPEC_V1_6.md: forge imagine, forge dreams; local Ollama for the UNKNOWN face only). 65/65 on the laptop and the S24.
+
+1.6.0

@@ -23,9 +23,9 @@ Status:   1.0.0 frozen (forge_cli.py, SPEC.md). v1.1 (forge_cli_v1_1.py,
           attest, LLLM engine via LLLM_CLI) frozen at 1.3.0. v1.4
           (forge_cli_v1_4.py, SPEC_V1_4.md: entity / subject add, subjects,
           predicates) frozen at 1.4.0. v1.5 (forge_cli_v1_5.py,
-          SPEC_V1_5.md: `forge answer`) built, not frozen. v1.6
+          SPEC_V1_5.md: `forge answer`) frozen at 1.5.0. v1.6
           (forge_cli_v1_6.py, SPEC_V1_6.md: `forge imagine`, `forge dreams`,
-          Ollama gemma2:2b for the UNKNOWN face only) built, not frozen.
+          Ollama gemma2:2b for the UNKNOWN face only) frozen at 1.6.0.
 
 ## What The Cockpit does
 

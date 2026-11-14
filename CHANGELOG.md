@@ -11,6 +11,22 @@ Function:
 
 ### Good
 
+- (none)
+
+### Bad
+
+- (none)
+
+### Ugly
+
+- (none)
+
+## [v1.6.0] — 2026-11-14 — FROZEN
+
+### Good
+
+- Frozen at 1.6.0 on James's sign-off ("phone worked freeze please"):
+  65/65 on the laptop and on the S24 (Ollama gemma2:2b installed there).
 - `SPEC_V1_6.md`, `test_forge_v1_6.py` (5 tests, run red first) and
   `forge_cli_v1_6.py`: `forge imagine [subject]` and `forge dreams`.
   The dreaming the old explorer-d334 had (Ollama gemma2:2b), back on
@@ -21,16 +37,7 @@ Function:
   shows each dream and what it dreamt from. 127.0.0.1 only; no
   fallback. Dreamt twice for real with gemma2:2b on a scratch copy of
   forge.db (throwaway key). 65/65. Built on James's delegation
-  ("explorer was able to dream", "keep it leight"). Not frozen (NOTES).
-- `SPEC_V1_5.md`, `test_forge_v1_5.py` (4 tests, run red first) and
-  `forge_cli_v1_5.py`: `forge answer <claim-id-or-prefix> <answer…>`
-  closes a question. The claim is superseded (P9 `supersede_claim`) by
-  a signed copy with UNKNOWN cleared and `answers: {claim_id, question,
-  answer}`; the copy goes to the ledger. Every check runs before any
-  write. Tried on a scratch copy of the real forge.db with a throwaway
-  key: the answered envelope-layer question left the Weaver's
-  briefing. 60/60. v1.4 untouched. Built on James's delegation
-  ("yes build it"). Not frozen (NOTES).
+  ("explorer was able to dream", "keep it leight").
 
 ### Bad
 
@@ -39,6 +46,29 @@ Function:
   only reorder phrases it has seen; the dreaming was lost until v1.6.
 - Each `forge imagine` asks for the passphrase, so it cannot yet run on
   a schedule the way explorer-d334's `smart_dreaming.sh` did.
+
+### Ugly
+
+- (none)
+
+## [v1.5.0] — 2026-11-14 — FROZEN
+
+### Good
+
+- Frozen at 1.5.0 on James's sign-off ("phone worked freeze please"):
+  65/65 on the laptop and on the S24 (Ollama gemma2:2b installed there).
+- `SPEC_V1_5.md`, `test_forge_v1_5.py` (4 tests, run red first) and
+  `forge_cli_v1_5.py`: `forge answer <claim-id-or-prefix> <answer…>`
+  closes a question. The claim is superseded (P9 `supersede_claim`) by
+  a signed copy with UNKNOWN cleared and `answers: {claim_id, question,
+  answer}`; the copy goes to the ledger. Every check runs before any
+  write. Tried on a scratch copy of the real forge.db with a throwaway
+  key: the answered envelope-layer question left the Weaver's
+  briefing. 60/60. v1.4 untouched. Built on James's delegation
+  ("yes build it").
+
+### Bad
+
 - Until v1.5 nothing could close a question: the Morning Briefing kept
   three envelope-layer questions that NOTES had resolved on 2026-11-11.
 - An answered cube has five faces, not six (UNKNOWN is null), so P13's

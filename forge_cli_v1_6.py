@@ -30,7 +30,7 @@ Internal helpers:
 Tier:     Tier 1 — Consumer (The Cockpit)
 Depends:  forge_cli_v1_5.py; Ollama on 127.0.0.1:11434 (imagine only)
 Spec:     SPEC_V1_6.md 1.6.0 (over SPEC_V1_5.md 1.5.0)
-Version:  1.6.0-dev
+Version:  1.6.0
 Licence:  MSL-1.0
 Author:   James Gilbert (Giblets Forge)
 """
