@@ -54,6 +54,29 @@ Canonical harvest:
 
 ## Open questions for owner review before v1 freeze
 
+- **Freeze forge_cli_v1_6 at 1.6.0?** `forge imagine`, `forge dreams`
+  (SPEC_V1_6.md). Built and green on the laptop (65/65); dreamt for real
+  with gemma2:2b on a scratch copy. Not yet run on the S24 (needs
+  Ollama there: `pkg install ollama`, `ollama pull gemma2:2b`).
+  Raised 2026-11-14. Owner: James.
+- **Decision 2 narrowed (LLLM only).** James, 2026-11-14: "UNKNOWN face
+  only", then "explorer was able to dream", "keep it leight". From
+  v1.6 a local Ollama model (127.0.0.1) may write the UNKNOWN face,
+  through `forge imagine` only. Asserted faces stay the owner's or the
+  LLLM's. Decision 2 below is otherwise unchanged.
+
+- **Freeze forge_cli_v1_5 at 1.5.0?** `forge answer` (SPEC_V1_5.md).
+  Built and green on the laptop (60/60). Not yet run on the S24.
+  Raised 2026-11-14. Owner: James.
+- **An answered cube has five faces.** Answering sets UNKNOWN to null
+  so every existing reader (the frozen Weaver v1.4 the Legacy uses,
+  the Field) stops showing the question without a new layer of its
+  own; the question and answer move to `answers`. The cost: P13's
+  inspection grade counts five faces, not six. The alternative, keeping
+  the UNKNOWN text and teaching each reader to skip answered claims,
+  needs a new layer in every reader. Decided by the VS Code AI on
+  James's delegation, 2026-11-14; open for James to overturn.
+
 - **Freeze forge_cli_v1_4 at 1.4.0?** Entities, subjects, predicates
   (SPEC_V1_4.md). Built and green on the laptop (56/56). Not yet run on
   the S24. Raised 2026-11-13. Owner: James.

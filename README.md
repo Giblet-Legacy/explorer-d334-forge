@@ -11,7 +11,8 @@ Function:
 
 Tier:     Tier 1 — Consumer (The Cockpit)
 Depends:  P2, P3, P4, P6, P7, P8, P9, P12, P13, P14, P15
-LLM:      LLLM only (lllm CLI as subprocess). No other backend.
+LLM:      LLLM (lllm CLI as subprocess). From v1.6, a local Ollama model
+          (127.0.0.1) may dream the UNKNOWN face only (`forge imagine`).
 Licence:  MSL-1.0
 Author:   James Gilbert (Giblets Forge)
 Status:   1.0.0 frozen (forge_cli.py, SPEC.md). v1.1 (forge_cli_v1_1.py,
@@ -21,7 +22,10 @@ Status:   1.0.0 frozen (forge_cli.py, SPEC.md). v1.1 (forge_cli_v1_1.py,
           v1.3 (forge_cli_v1_3.py, SPEC_V1_3.md: P13 v3 gate, commit_cube,
           attest, LLLM engine via LLLM_CLI) frozen at 1.3.0. v1.4
           (forge_cli_v1_4.py, SPEC_V1_4.md: entity / subject add, subjects,
-          predicates) frozen at 1.4.0.
+          predicates) frozen at 1.4.0. v1.5 (forge_cli_v1_5.py,
+          SPEC_V1_5.md: `forge answer`) built, not frozen. v1.6
+          (forge_cli_v1_6.py, SPEC_V1_6.md: `forge imagine`, `forge dreams`,
+          Ollama gemma2:2b for the UNKNOWN face only) built, not frozen.
 
 ## What The Cockpit does
 
@@ -32,6 +36,8 @@ Maps every meaningful human action onto the frozen primitive layers:
 - `forge trust <id>` → P14 compute_lambda (full provenance)
 - `forge approve <id>` / `forge refuse <id>` → P15 create_seal → P4 append
 - `forge verify-ledger` → P6 zero-trust independent verification
+- `forge imagine [subject]` → Ollama gemma2:2b dreams across your claims → P13 Keystone Gate → P2 sign → P9 write (UNKNOWN) → P4/P8 append (v1.6); `forge dreams` shows what each dream came from
+- `forge answer <id> "<answer>"` → P9 supersede (UNKNOWN cleared, question and answer kept) → P4/P8 append (v1.5)
 
 ## What The Cockpit does not do
 
