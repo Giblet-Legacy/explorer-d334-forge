@@ -28,7 +28,7 @@ Internal helpers:
 Tier:     Tier 1 — Consumer (The Cockpit)
 Depends:  forge_cli_v1_6.py (1.6.0), forge_cli_v1_4.py (register), P9 substrate_v4 (4.0.0)
 Spec:     SPEC_V1_7.md 1.7.0 (over SPEC_V1_6.md 1.6.0)
-Version:  1.7.0-dev
+Version:  1.7.0
 Licence:  MSL-1.0
 Author:   James Gilbert (Giblets Forge)
 """

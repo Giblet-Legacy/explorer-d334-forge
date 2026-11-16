@@ -11,13 +11,29 @@ Function:
 
 ### Good
 
+- (none)
+
+### Bad
+
+- (none)
+
+### Ugly
+
+- (none)
+
+## [v1.7.0] — 2026-11-16 — FROZEN
+
+### Good
+
+- Frozen at 1.7.0 on James's word ("freeze all"): 79/79 on the laptop.
+  The Legacy v12 (the-legacy 1.10.0) is its first caller.
 - `forge_cli_v1_7.py`, `SPEC_V1_7.md`, `test_forge_v1_7.py` (14 tests, run red
   first): entity and subject drafts in the inbox (James, 2026-11-16: tabs for
   new entity, subject and claim in the Legacy, linked by drop-downs). An entity
   draft is registered; a subject draft is registered and linked to its entity
   (P9 v4 membership, in the ledger too); claim drafts are v1.2's, unchanged.
   `inbox commit` does entities, then subjects, then claims, so one commit can
-  make all three. 79/79. Not frozen.
+  make all three. 79/79.
 
 ### Bad
 
