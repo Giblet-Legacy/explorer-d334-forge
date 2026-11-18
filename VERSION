@@ -16,6 +16,6 @@
 
 # 1.7.0 — forge_cli_v1_7.py frozen (SPEC_V1_7.md: entity and subject drafts in the inbox, committed with their membership). 79/79 on the laptop.
 
-# 1.8.0 — built 2026-11-18, not frozen: forge_cli_v1_8.py (SPEC_V1_8.md: inbox ordered by created_at, which always increases). 83/83 on the laptop.
+# 1.8.0 — forge_cli_v1_8.py frozen 2026-11-18 (James: "freeze"): (SPEC_V1_8.md: inbox ordered by created_at, which always increases). 83/83 on the laptop.
 
-1.7.0
+1.8.0

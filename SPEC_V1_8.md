@@ -64,7 +64,7 @@ kind it now follows the order written. Every other command is v1.7's.
 The v1.2 suite's `test_inbox_commit_and_refuse` relied on two drafts
 landing in different milliseconds, which is v1.2's own guarantee. Its
 1.7.0 file is kept byte-identical in `archive/1.7.0/`, and
-`test_forge_v1_2_v2.py` waits for the next millisecond between those two
+`test_forge_v1_2_at_v1_8.py` waits for the next millisecond between those two
 writes. Same-millisecond order is tested here, against v1.8.
 
 ---
@@ -72,4 +72,4 @@ writes. Same-millisecond order is tested here, against v1.8.
 ## Document control
 
 - **SPEC V1.8 1.8.0** — 2026-11-18, by the VS Code AI on James's "yes".
-  Not frozen.
+  Frozen 2026-11-18 (James: "freeze").

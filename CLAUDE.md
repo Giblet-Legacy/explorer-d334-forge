@@ -14,7 +14,7 @@ Entry point from v1.2: `forge_cli_v1_2.py` (SPEC_V1_2.md: LLLM provenance, inbox
 `forge_cli_v1_5.py` (SPEC_V1_5.md: `forge answer`; frozen 1.5.0) is the layer over v1.4.
 `forge_cli_v1_6.py` (SPEC_V1_6.md: `forge imagine`, `forge dreams`; frozen 1.6.0) is the entry point from v1.6; it is the layer over v1.5.
 `forge_cli_v1_7.py` (SPEC_V1_7.md: entity and subject drafts in the inbox, committed with their membership; frozen 1.7.0) is the entry point from v1.7; run `python forge_cli_v1_7.py inbox commit`.
-`forge_cli_v1_8.py` (SPEC_V1_8.md: the inbox in the order drafts were written, by `created_at`; built 2026-11-18, not frozen) is the layer over v1.7; run `python forge_cli_v1_8.py inbox commit`. The v1.2 suite is `test_forge_v1_2_v2.py`; the 1.7.0 file is in `archive/1.7.0/`.
+`forge_cli_v1_8.py` (SPEC_V1_8.md: the inbox in the order drafts were written, by `created_at`; frozen 1.8.0) is the entry point from v1.8; it is the layer over v1.7; run `python forge_cli_v1_8.py inbox commit`. The v1.2 suite is `test_forge_v1_2_at_v1_8.py`; the 1.7.0 file is in `archive/1.7.0/`.
 
 Never rewrite a primitive. Add a layer. If a Cockpit behaviour needs
 a primitive change, that is a new layer ABOVE the primitive, not an

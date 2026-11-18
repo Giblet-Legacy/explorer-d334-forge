@@ -1,8 +1,8 @@
 """
-test_forge_v1_2_v2.py — The Cockpit v1.2 (LLLM provenance, inbox, status) test suite
+test_forge_v1_2_at_v1_8.py — The Cockpit v1.2 (LLLM provenance, inbox, status) test suite
 
 Function:
-    v2 (2026-11-18, SPEC_V1_8.md §4): the 1.7.0 file, kept byte-identical in
+    As carried into 1.8.0 (2026-11-18, SPEC_V1_8.md §4): the 1.7.0 file, kept byte-identical in
     archive/1.7.0/, with one change: test_inbox_commit_and_refuse waits for
     the next millisecond between its two drafts. The VPS ran fast enough to
     write both in one millisecond, which v1.2 never ordered.
@@ -141,7 +141,7 @@ def test_dream_anchors_build_once(workspace, run):
     assert run("verify-ledger")[0] == 0
 
 
-# v2 helper: _next_millisecond
+# 1.8.0 helper: _next_millisecond
 def _next_millisecond():
     """Wait until time.time() is in a later millisecond than now."""
     start = int(time.time() * 1000)
