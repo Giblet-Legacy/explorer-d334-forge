@@ -11,15 +11,30 @@ Function:
 
 ### Good
 
-- (none)
+- 1.8.0 (2026-11-18, not frozen; James: "yes"): `forge_cli_v1_8.py`
+  (SPEC_V1_8.md). The inbox is ordered by each draft's own `created_at`,
+  then id, and new drafts get a `created_at` after every pending one,
+  even when the clock has not moved. List, commit and drop are v1.7's
+  behaviour in that order.
+- `test_forge_v1_8.py` (4 tests, run red first): a frozen clock keeps
+  the write order through commit; same-millisecond drafts whose hashes
+  sort the other way come out by `created_at`; an unreadable draft is
+  listed and refused; claim drafts keep v1.2's keys.
+- `test_forge_v1_2_v2.py`: the 1.7.0 v1.2 suite (kept byte-identical in
+  `archive/1.7.0/`) with one wait for the next millisecond. `pytest.ini`
+  skips `archive/`. 83/83.
 
 ### Bad
 
-- (none)
+- The Legacy (legacy_v12) still writes and lists drafts through v1.7.
+  Its drafts sort correctly under v1.8, but its own listing keeps v1.2's
+  order until a Legacy layer moves to v1.8.
 
 ### Ugly
 
-- (none)
+- Since v1.2 (2026-11-13), two drafts written in the same millisecond
+  were listed, and could be signed, in hash order. It only showed when
+  the VPS check ran the suite on a faster machine (2026-11-18).
 
 ## [v1.7.0] — 2026-11-16 — FROZEN
 
